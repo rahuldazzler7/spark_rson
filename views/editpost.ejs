@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+    <link rel="stylesheet" href="https://bootswatch.com/4/sandstone/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <%- include ('./shared/navbar') %> 
+
+<!--Edit post-->
+
+<div class="container" style="padding: 20px;">
+<form action="/users/edit/<%=rposts.id %>" method="POST" enctype="multipart/form-data">
+  <fieldset>
+    <legend>Edit Post</legend>
+    
+    <div class="form-group">
+      <label for="exampleInputEmail1">Title</label>
+      <input type="text" class="form-control" id="title" name="title" aria-describedby="emailHelp" value="<%= rposts.title %>">
+    </div>
+    <div class="form-group">
+      <label for="exampleSelect1">Type</label>
+      <select class="form-control" id="type" name="type">
+        <option><%= rposts.type %></option>
+        <option>Science & Technology</option>
+        <option>Travel</option>
+        <option>Foods</option>
+        <option>Sports</option>
+        <option>Others</option>>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="exampleTextarea">Description</label>
+      <textarea class="form-control" id="description" name="description" rows="3"><%= rposts.description %></textarea>
+    </div>
+    <div class="form-group">
+      <label for="exampleInputFile"></label>
+      <img class="card-img rounded-0" src="<%= rposts.postimg %>" alt="" style="padding: 10px; height: 200px; width: 400px;">
+      <input type="file" class="form-control-file" id="postimg" accept="image/*" name="postimg">
+    </div>
+    <div style="display: none;">
+      Updating on : <input type="date" id="updated_on" name="updated_on" >
+    </div>
+  
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <% if(currentuser.isadmin || rposts.author == currentuser.username ) {%>
+      <a href='/delete/<%= rposts._id %>' class="btn btn-danger" onclick="return confirmdelete()"> Delete </a>
+      
+      <% } %>
+  </fieldset>
+</form>
+</div>
+
+<script>
+   function confirmdelete(){
+                            var x= confirm("Are you sure you want to remove <%= rposts._id %> ?" );
+                            if(x){
+                                return true;
+                            }
+                            else{
+                                return false;
+                            }
+                        }
+  function setInputDate(_id){
+              var _dat = document.querySelector(_id);
+              var hoy = new Date(),
+                  d = hoy.getDate(),
+                  m = hoy.getMonth()+1, 
+                  y = hoy.getFullYear(),
+                  data;
+              if(d < 10){
+                  d = "0"+d;
+              };
+              if(m < 10){
+                  m = "0"+m;
+              };
+              data = y+"-"+m+"-"+d;
+              console.log(data);
+              _dat.value = data;
+          };
+          setInputDate("#updated_on");
+  if('geolocation' in navigator){
+      console.log('geolocation available');
+     
+      navigator.geolocation.getCurrentPosition(async (position)=>{
+          const lat = position.coords.latitude;
+          const long = position.coords.longitude;
+          console.log('Latitude >>' + lat);
+          console.log('Longitude >>' + long);
+       
+      })
+  } else{
+      console.log('geolocation is not available');
+  }
+</script>
+
+
+
+    <script src="https://kit.fontawesome.com/ded347396d.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.5.11/split.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
+</html>
