@@ -53,12 +53,19 @@
           <img src="<%=aposts[i].postimg%>"  class="card-img" alt="...">
         </div>
         <div class="col-md-8" >
+          <% if(currentuser.isadmin || aposts[i].author == currentuser.username ) { %>
           <div class="container" style="padding-left: 550px;">
             <a href="/edit/<%= aposts[i]._id %>">Edit</a>
           </div>
+          <% }  %>
           <div class="card-body">
             <h5 class="card-title"><%=aposts[i].title%></h5>
-            <p class="card-text"><%=aposts[i].description%></p>
+            <% var w = aposts[i].description %>
+            <% if(w.length > 100) { %>
+              <p class="card-text"><%=w.slice(0,99) %>...<a href="#">Continiue reading</a></p>
+            <% } else { %>
+              <p class="card-text"><%=aposts[i].description%></p>
+              <% }  %>
             <% var b = aposts[i].timest %>
             <% var c = b.toString().slice(0,10) %>
             <p class="card-text"><small class="text-muted"><%=c %></small></p>

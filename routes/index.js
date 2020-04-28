@@ -16,6 +16,8 @@ router.get('/edit/:id', ensureAuthenticated, postcontroll.getAll)
 router.get('/stark', (req,res)=> res.render('stark'));
 router.get('/delete/:id', ensureAuthenticated, postcontroll.deletePost)
 
+// router.use('/game',express.static('public/fb.html'))
+
 
 
 module.exports = router;

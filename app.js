@@ -53,9 +53,11 @@ app.use(function(req, res, next) {
   });
 
 app.use('/',express.static('public'));
+app.use('/g',express.static('public'));
 
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users') );
+app.use('/games', require('./routes/games'));
 
  
 app.get('/ai',  (req, res)=>{
